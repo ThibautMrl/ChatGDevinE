@@ -1,11 +1,10 @@
 import gradio as gr
 from PIL import Image
 
-history = [gr.ChatMessage(role="assistant", content="De quelle page Wikipedia provient cette image ?"),]
-img = Image.open(r"./Mbappe.jpg")
+init_message = "De quelle page Wikipedia provient cette image ?"
 
 def new_game():
-    history = [gr.ChatMessage(role="assistant", content="De quelle page Wikipedia provient cette image ?"), ]
+    history = [gr.ChatMessage(role="assistant", content=init_message), ]
     img = Image.open(r"./Zidane.jpg")
     return history,gr.Image(img,width=300, height=200)
 
@@ -17,9 +16,10 @@ def chatbot_response(history, message):
 
 with gr.Blocks() as demo:
 
-    image = gr.Image(img,width=300, height=200)
+    image = gr.Image(Image.open(r"./Mbappe.jpg"),width=300, height=200)
     chatbot = gr.Chatbot(
-        history,type="messages"
+        [gr.ChatMessage(role="assistant", content=init_message), ],
+        type="messages"
     )
     msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...")
     clear = gr.Button("Nouvelle partie")
