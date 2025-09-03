@@ -2,7 +2,7 @@ import gradio as gr
 from typing import List, Optional
 from PIL import Image
 
-from .wikiPage import get_random_wikipedia_page_with_image
+from wikiPage import get_random_wikipedia_page_with_image
 
 
 class Orchestrator():

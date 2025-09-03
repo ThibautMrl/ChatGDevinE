@@ -294,6 +294,34 @@ wheels = [
 ]
 
 [[package]]
+name = "cairocffi"
+version = "1.7.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cffi" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/70/c5/1a4dc131459e68a173cbdab5fad6b524f53f9c1ef7861b7698e998b837cc/cairocffi-1.7.1.tar.gz", hash = "sha256:2e48ee864884ec4a3a34bfa8c9ab9999f688286eb714a15a43ec9d068c36557b", size = 88096, upload-time = "2024-06-18T10:56:06.741Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/93/d8/ba13451aa6b745c49536e87b6bf8f629b950e84bd0e8308f7dc6883b67e2/cairocffi-1.7.1-py3-none-any.whl", hash = "sha256:9803a0e11f6c962f3b0ae2ec8ba6ae45e957a146a004697a1ac1bbf16b073b3f", size = 75611, upload-time = "2024-06-18T10:55:59.489Z" },
+]
+
+[[package]]
+name = "cairosvg"
+version = "2.8.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cairocffi" },
+    { name = "cssselect2" },
+    { name = "defusedxml" },
+    { name = "pillow" },
+    { name = "tinycss2" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ab/b9/5106168bd43d7cd8b7cc2a2ee465b385f14b63f4c092bb89eee2d48c8e67/cairosvg-2.8.2.tar.gz", hash = "sha256:07cbf4e86317b27a92318a4cac2a4bb37a5e9c1b8a27355d06874b22f85bef9f", size = 8398590, upload-time = "2025-05-15T06:56:32.653Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/67/48/816bd4aaae93dbf9e408c58598bc32f4a8c65f4b86ab560864cb3ee60adb/cairosvg-2.8.2-py3-none-any.whl", hash = "sha256:eab46dad4674f33267a671dce39b64be245911c901c70d65d2b7b0821e852bf5", size = 45773, upload-time = "2025-05-15T06:56:28.552Z" },
+]
+
+[[package]]
 name = "certifi"
 version = "2025.8.3"
 source = { registry = "https://pypi.org/simple" }
@@ -382,14 +410,20 @@ name = "chatgdevine"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "cairosvg" },
     { name = "gradio" },
     { name = "jupyterlab" },
+    { name = "wget" },
+    { name = "wikipedia" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "cairosvg", specifier = ">=2.8.2" },
     { name = "gradio", specifier = ">=5.44.1" },
     { name = "jupyterlab", specifier = ">=4.4.7" },
+    { name = "wget", specifier = ">=3.2" },
+    { name = "wikipedia", specifier = ">=1.4.0" },
 ]
 
 [[package]]
@@ -420,6 +454,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/4c/13/7d740c5849255756bc17888787313b61fd38a0a8304fc4f073dfc46122aa/comm-0.2.3.tar.gz", hash = "sha256:2dc8048c10962d55d7ad693be1e7045d891b7ce8d999c97963a5e3e99c055971", size = 6319, upload-time = "2025-07-25T14:02:04.452Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/60/97/891a0971e1e4a8c5d2b20bbe0e524dc04548d2307fee33cdeba148fd4fc7/comm-0.2.3-py3-none-any.whl", hash = "sha256:c615d91d75f7f04f095b30d1c1711babd43bdc6419c1be9886a85f2f4e489417", size = 7294, upload-time = "2025-07-25T14:02:02.896Z" },
+]
+
+[[package]]
+name = "cssselect2"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tinycss2" },
+    { name = "webencodings" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9f/86/fd7f58fc498b3166f3a7e8e0cddb6e620fe1da35b02248b1bd59e95dbaaa/cssselect2-0.8.0.tar.gz", hash = "sha256:7674ffb954a3b46162392aee2a3a0aedb2e14ecf99fcc28644900f4e6e3e9d3a", size = 35716, upload-time = "2025-03-05T14:46:07.988Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0f/e7/aa315e6a749d9b96c2504a1ba0ba031ba2d0517e972ce22682e3fccecb09/cssselect2-0.8.0-py3-none-any.whl", hash = "sha256:46fc70ebc41ced7a32cd42d58b1884d72ade23d21e5a4eaaf022401c13f0e76e", size = 15454, upload-time = "2025-03-05T14:46:06.463Z" },
 ]
 
 [[package]]
@@ -2185,3 +2232,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/1b/6c/c65773d6cab416a64d191d6ee8a8b1c68a09970ea6909d16965d26bfed1e/websockets-15.0.1-cp313-cp313-win_amd64.whl", hash = "sha256:e09473f095a819042ecb2ab9465aee615bd9c2028e4ef7d933600a8401c79561", size = 176837, upload-time = "2025-03-05T20:02:55.237Z" },
     { url = "https://files.pythonhosted.org/packages/fa/a8/5b41e0da817d64113292ab1f8247140aac61cbf6cfd085d6a0fa77f4984f/websockets-15.0.1-py3-none-any.whl", hash = "sha256:f7a866fbc1e97b5c617ee4116daaa09b722101d4a3c170c787450ba409f9736f", size = 169743, upload-time = "2025-03-05T20:03:39.41Z" },
 ]
+
+[[package]]
+name = "wget"
+version = "3.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/47/6a/62e288da7bcda82b935ff0c6cfe542970f04e29c756b0e147251b2fb251f/wget-3.2.zip", hash = "sha256:35e630eca2aa50ce998b9b1a127bb26b30dfee573702782aa982f875e3f16061", size = 10857, upload-time = "2015-10-22T15:26:37.51Z" }
+
+[[package]]
+name = "wikipedia"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/67/35/25e68fbc99e672127cc6fbb14b8ec1ba3dfef035bf1e4c90f78f24a80b7d/wikipedia-1.4.0.tar.gz", hash = "sha256:db0fad1829fdd441b1852306e9856398204dc0786d2996dd2e0c8bb8e26133b2", size = 27748, upload-time = "2014-11-15T15:59:49.808Z" }
