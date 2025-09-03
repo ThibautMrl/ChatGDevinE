@@ -23,7 +23,8 @@ def new_game():
 
     chatbot = gr.Chatbot(
         [gr.ChatMessage(role="assistant", content=init_message), ],
-        type="messages"
+        type="messages",
+        label="ChatGDviné"
     )
 
     return chatbot, img_gr
