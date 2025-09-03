@@ -8,7 +8,7 @@ class Orchestrator():
         self.article : Optional[str]
         self.title : Optional[str]
         self.image : Optional[str]
-
+        self.is_win : bool = False
 
     def chose_article(self):
         raise NotImplementedError
