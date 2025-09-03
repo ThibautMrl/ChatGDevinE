@@ -45,10 +45,18 @@ with gr.Blocks() as demo:
     #     [gr.ChatMessage(role="assistant", content=init_message), ],
     #     type="messages"
     # )
+    with gr.Sidebar("", open=True, position="right"):
+        #slider
+        slider = gr.Slider(minimum=0, maximum=100, step=1, value=50, label="Vues par page minimum")
+        output = gr.Number(visible=False)
+        slider.change(fn=lambda x: x, inputs=slider, outputs=output)
+
+        clue = gr.Textbox(label="Indices")
+
     msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...")
     clear = gr.Button("Nouvelle partie")
 
     msg.submit(chatbot_response, [chatbot, msg], [chatbot, msg])
     clear.click(fn=new_game, outputs = [chatbot,image], queue=False)
 
-demo.launch()
+demo.launch(share=True)
