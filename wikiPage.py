@@ -79,7 +79,14 @@ class WikiInterface:
         articles = self.filterArticles(articles)
         self.writeJson(f"articles.json",articles)
 
+    
+    def get_random_page(self, category="random"):
+        ""
+        data = self.openJson(f"articles.json")
+        data_category = [i for i in data if category in i["categories"]]
+        return random.choice(self.openJson(f"articles.json"))
 
-    def get_random_page(self):
+
+    def get_random_page_OLD(self):
         return random.choice(self.openJson(f"articles.json"))
         #print(random_article["title"])
