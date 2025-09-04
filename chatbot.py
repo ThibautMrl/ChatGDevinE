@@ -64,10 +64,10 @@ with gr.Blocks() as demo:
     with gr.Sidebar("", open=True, position="right"):
         #slider
         categorie = gr.Dropdown(
-            choices=["all","Film"],
+            choices=["random","actor","movie","people","singer","writer"],
             label="Difficulté",
             interactive=True,
-            value="all",
+            value="random",
         )
 
         clue = gr.Textbox(label="Indices")
