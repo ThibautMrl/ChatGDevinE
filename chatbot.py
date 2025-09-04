@@ -31,7 +31,7 @@ def new_game(categorie):
     #
     # msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...",interactive=True)
     orchestrator.is_win = False
-    return history, img, ""
+    return history, img, gr.update("",interactive=True)
 
 
 def chatbot_response(history, message):
