@@ -14,7 +14,7 @@ class Chat:
         #        """,
         #    }
         #self.conversation = [self.conversation_starter]
-        
+
         self.model_name = "llama3.1:latest"
         self.port = 9007  # 11434
         self.client = Client(host=f"http://localhost:{self.port}")
@@ -23,6 +23,7 @@ class Chat:
         return [self._format_gr_to_msg(m) for m in msg]
     
     def _format_gr_to_msg(self, msg: gr.ChatMessage) -> dict:
+        
         return {"role": msg.role, "content": msg.content}
 
     def _format_msg_to_gr(self, msg: dict) -> gr.ChatMessage:
@@ -37,4 +38,4 @@ class Chat:
             stream=False,
         )
         content = chat_response["message"]["content"]
-        return self._format_msg_to_gr(content)
+        return content #self._format_msg_to_gr(content)
