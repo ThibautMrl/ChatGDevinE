@@ -14,9 +14,9 @@ def get_random_wikipedia_page_with_image():
     return page
 
 
-page = get_random_wikipedia_page_with_image()
-
-title = page.title
-summary = page.summary
-content = page.content.strip()
-image = page.images[0]
+#page = get_random_wikipedia_page_with_image()
+#
+#title = page.title
+#summary = page.summary
+#content = page.content.strip()
+#image = page.images[0]
