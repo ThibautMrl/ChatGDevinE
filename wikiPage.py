@@ -29,6 +29,26 @@ class WikiInterface:
         return page
 
 
+    def getCategories(self,categories_list):
+        "regex to get some categories"
+        new_categories = []
+        old_categories = set([w.lower() for w in " ".join(categories_list).split()])
+        if "films" in old_categories or "films" in old_categories:
+            new_categories.append("movie")
+        if "actor" in old_categories or "actress" in old_categories or "actors" in old_categories or "actresses" in old_categories:
+            new_categories.append("actor")
+        if "people" in old_categories:
+            new_categories.append("people")
+        if "singer" in old_categories or "singers" in old_categories:
+            new_categories.append("singer")
+        if "writer" in old_categories or "writers" in old_categories:
+            new_categories.append("writer")
+        if "muscisian" in old_categories or "muscisians" in old_categories:
+            new_categories.append("muscisian")
+        new_categories.append("random")
+        return new_categories
+
+
     def filterArticles(self, articles):
         "keep only articles with an image and a content"
         kept_articles = [] #with images
@@ -39,6 +59,7 @@ class WikiInterface:
                     "title":a.title,
                     #"summary":a.summary,
                     "content":a.content.strip(),
+                    "categories":self.getCategories(a.categories),
                     "image":a.images[0]
                 }
                 if len(a.images) != 0 and len(a.content) != 0:
@@ -46,6 +67,7 @@ class WikiInterface:
             except:
                 continue
         return kept_articles
+    
 
     def getTopViews(self, project="en.wikipedia.org", access="all-access", year="2025", month="08", limit=50):
         "saves in a json file the N articles with the most views in wikipedia"
