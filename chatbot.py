@@ -27,11 +27,9 @@ def new_game():
         label="ChatGDviné"
     )
 
-    return chatbot, img_gr
-
-def new_game_button():
-    history,img = new_game()
-    return history, gr.Image(img,label="",width=300, height=200)
+    msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...",interactive=True)
+    orchestrator.is_win = False
+    return chatbot, img_gr, msg
 
 def chatbot_response(history, message):
     # Réponse texte + image
@@ -39,11 +37,14 @@ def chatbot_response(history, message):
     #history.append(gr.ChatMessage(role="assistant", content="Ceci est une réponse."))
     model_response = orchestrator.get_response_from_model(history)
     history.append(gr.ChatMessage(role="assistant", content=model_response))
-    return history, ""
+    state = not orchestrator.is_win
+
+    msg = gr.Textbox("",label="",placeholder="Entrez votre question ou réponse...",interactive=state)
+    return history, msg
 
 with gr.Blocks() as demo:
     #init
-    chatbot, image = new_game()
+    chatbot, image, msg = new_game()
     # chatbot = gr.Chatbot(
     #     [gr.ChatMessage(role="assistant", content=init_message), ],
     #     type="messages"
@@ -56,10 +57,9 @@ with gr.Blocks() as demo:
 
         clue = gr.Textbox(label="Indices")
 
-    msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...")
     clear = gr.Button("Nouvelle partie")
 
     msg.submit(chatbot_response, [chatbot, msg], [chatbot, msg])
-    clear.click(fn=new_game, outputs = [chatbot,image], queue=False)
+    clear.click(fn=new_game, outputs = [chatbot,image,msg], queue=False)
 
 demo.launch(share=True)
