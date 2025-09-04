@@ -59,5 +59,5 @@ class WikiInterface:
 
 
     def get_random_page(self):
-        return self.openJson(f"articles.json")
+        return random.choice(self.openJson(f"articles.json"))
         #print(random_article["title"])
