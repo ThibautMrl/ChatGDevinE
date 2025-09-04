@@ -18,8 +18,8 @@ class Orchestrator():
         self.wiki_interface = WikiInterface()
         self.answer_checker : Optional[AnswerChecker]
 
-    def chose_article(self):
-        page = self.wiki_interface.get_random_page()
+    def chose_article(self, category = 'random'):
+        page = self.wiki_interface.get_random_page(category=category)
         self.title = page["title"]
         self.article = page["content"]
         self.image = page["image"]
