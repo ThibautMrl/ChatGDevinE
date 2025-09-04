@@ -70,8 +70,6 @@ with gr.Blocks() as demo:
             value="random",
         )
 
-        clue = gr.Textbox(label="Indices")
-
     clear = gr.Button("Nouvelle partie")
 
     msg.submit(chatbot_response, [chatbot, msg], [chatbot, msg])
