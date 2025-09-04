@@ -8,6 +8,7 @@ dependencies = [
     "cairosvg>=2.8.2",
     "gradio>=5.44.1",
     "jupyterlab>=4.4.7",
+    "ollama>=0.5.3",
     "wget>=3.2",
     "wikipedia>=1.4.0",
 ]
