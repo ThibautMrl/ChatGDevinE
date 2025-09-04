@@ -6,20 +6,23 @@ from io import BytesIO
 import cairosvg
 
 headers = {"User-Agent": "Mozilla/5.0"}
-init_message = "De quelle page Wikipedia provient cette image ?"
 orchestrator = Orchestrator()
 
-def new_game(categorie):
+def new_game(categorie="random"):
 
-    orchestrator.chose_article()
+    orchestrator.chose_article(categorie)
     print(orchestrator.get_image())
     response = requests.get(orchestrator.get_image(),headers=headers)
+    answer = orchestrator.get_title()
+    system_prompt = f"""You are an assistant that gives hints to the user. Answer questions, keeping the answer a secret. Here some context:
+        {' '.join(orchestrator.get_article().split()[:30]).replace(answer, "TO_GUESS")}"""
+    init_message = "Welcome!\nWhat Wikipedia article is this image from? Ask some clarification questions if you do not know what article could the image be from, or guess directly!\n"
 
     if orchestrator.get_image().endswith(".svg"):
         img = Image.open(BytesIO(cairosvg.svg2png(bytestring=response.content)))
     else:
         img = Image.open(BytesIO(response.content))
-    history = [gr.ChatMessage(role="assistant", content=init_message), ]
+    history = [gr.ChatMessage(role="system", content=system_prompt), gr.ChatMessage(role="assistant", content=init_message), ]
 
     # img_gr = gr.Image(img,width=300, height=200,show_label=False,show_download_button=False)
     #
@@ -49,7 +52,7 @@ def chatbot_response(history, message):
 
 with gr.Blocks() as demo:
     #init
-    history, img, _ = new_game("")
+    history, img, _ = new_game()
 
     img_gr = gr.Image(img,width=300, height=200,show_label=False,show_download_button=False)
 
@@ -65,7 +68,7 @@ with gr.Blocks() as demo:
         #slider
         categorie = gr.Dropdown(
             choices=["random","actor","movie","people","singer","writer"],
-            label="Difficulté",
+            label="Catégorie",
             interactive=True,
             value="random",
         )
