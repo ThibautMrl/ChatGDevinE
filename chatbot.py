@@ -9,7 +9,8 @@ headers = {"User-Agent": "Mozilla/5.0"}
 init_message = "De quelle page Wikipedia provient cette image ?"
 orchestrator = Orchestrator()
 
-def new_game():
+def new_game(categorie):
+
     orchestrator.chose_article()
     print(orchestrator.get_image())
     response = requests.get(orchestrator.get_image(),headers=headers)
@@ -18,18 +19,20 @@ def new_game():
         img = Image.open(BytesIO(cairosvg.svg2png(bytestring=response.content)))
     else:
         img = Image.open(BytesIO(response.content))
+    history = [gr.ChatMessage(role="assistant", content=init_message), ]
 
-    img_gr = gr.Image(img,width=300, height=200,show_label=False,show_download_button=False)
-
-    chatbot = gr.Chatbot(
-        [gr.ChatMessage(role="assistant", content=init_message), ],
-        type="messages",
-        label="ChatGDviné"
-    )
-
-    msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...",interactive=True)
+    # img_gr = gr.Image(img,width=300, height=200,show_label=False,show_download_button=False)
+    #
+    # chatbot = gr.Chatbot(
+    #     [gr.ChatMessage(role="assistant", content=init_message), ],
+    #     type="messages",
+    #     label="ChatGDviné"
+    # )
+    #
+    # msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...",interactive=True)
     orchestrator.is_win = False
-    return chatbot, img_gr, msg
+    return history, img, ""
+
 
 def chatbot_response(history, message):
     # Réponse texte + image
@@ -39,27 +42,36 @@ def chatbot_response(history, message):
     history.append(gr.ChatMessage(role="assistant", content=model_response))
     state = not orchestrator.is_win
 
-    msg = gr.Textbox("",label="",placeholder="Entrez votre question ou réponse...",interactive=state)
-    return history, msg
+    return history, gr.update(value="",interactive=state)
 
 with gr.Blocks() as demo:
     #init
-    chatbot, image, msg = new_game()
-    # chatbot = gr.Chatbot(
-    #     [gr.ChatMessage(role="assistant", content=init_message), ],
-    #     type="messages"
-    # )
+    history, img, _ = new_game("")
+
+    img_gr = gr.Image(img,width=300, height=200,show_label=False,show_download_button=False)
+
+    chatbot = gr.Chatbot(
+        history,
+        type="messages",
+        label="ChatGDviné"
+    )
+
+    msg = gr.Textbox(label="",placeholder="Entrez votre question ou réponse...",interactive=True)
+
     with gr.Sidebar("", open=True, position="right"):
         #slider
-        slider = gr.Slider(minimum=0, maximum=100, step=1, value=50, label="Vues par page minimum")
-        output = gr.Number(visible=False)
-        slider.change(fn=lambda x: x, inputs=slider, outputs=output)
+        categorie = gr.Dropdown(
+            choices=["all","Film"],
+            label="Difficulté",
+            interactive=True,
+            value="all",
+        )
 
         clue = gr.Textbox(label="Indices")
 
     clear = gr.Button("Nouvelle partie")
 
     msg.submit(chatbot_response, [chatbot, msg], [chatbot, msg])
-    clear.click(fn=new_game, outputs = [chatbot,image,msg], queue=False)
+    clear.click(fn=new_game,inputs=categorie, outputs = [chatbot,img_gr,msg], queue=False)
 
 demo.launch(share=True)
