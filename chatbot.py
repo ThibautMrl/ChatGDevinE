@@ -39,7 +39,10 @@ def chatbot_response(history, message):
     history.append(gr.ChatMessage(role="user",content=message)),
     #history.append(gr.ChatMessage(role="assistant", content="Ceci est une réponse."))
     model_response = orchestrator.get_response_from_model(history)
-    history.append(gr.ChatMessage(role="assistant", content=model_response))
+    if orchestrator.is_win:
+        history.append(gr.ChatMessage(role="assistant", content="Bravo vous avez trouvé !"))
+    else:
+        history.append(gr.ChatMessage(role="assistant", content=model_response))
     state = not orchestrator.is_win
 
     return history, gr.update(value="",interactive=state)
