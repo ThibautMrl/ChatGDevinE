@@ -19,7 +19,7 @@ def new_game():
     else:
         img = Image.open(BytesIO(response.content))
 
-    img_gr = gr.Image(img,width=300, height=200)
+    img_gr = gr.Image(img,width=300, height=200,show_label=False,show_download_button=False)
 
     chatbot = gr.Chatbot(
         [gr.ChatMessage(role="assistant", content=init_message), ],
