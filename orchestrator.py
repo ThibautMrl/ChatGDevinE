@@ -36,7 +36,6 @@ class Orchestrator():
         return self.title
 
     def _test_response(self, history : List[gr.ChatMessage]) -> bool:
-        breakpoint()
         if self.answer_checker.check_ans(history[-1].content):
             self.is_win = True
             print("WIN")
