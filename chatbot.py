@@ -13,9 +13,9 @@ def new_game(categorie="random"):
     orchestrator.chose_article(categorie)
     print(orchestrator.get_image())
     response = requests.get(orchestrator.get_image(),headers=headers)
-    answer = orchestrator.get_title()
+
     system_prompt = f"""You are an assistant that gives hints to the user. Answer questions, keeping the answer a secret. Here some context:
-        {' '.join(orchestrator.get_article().split()[:30]).replace(answer, "TO_GUESS")}"""
+        {' '.join(orchestrator.get_article().split()[:30])}"""
     init_message = "Welcome!\nWhat Wikipedia article is this image from? Ask some clarification questions if you do not know what article could the image be from, or guess directly!\n"
 
     if orchestrator.get_image().endswith(".svg"):
@@ -41,7 +41,8 @@ def chatbot_response(history, message):
     # Réponse texte + image
     history.append(gr.ChatMessage(role="user",content=message)),
     #history.append(gr.ChatMessage(role="assistant", content="Ceci est une réponse."))
-    model_response = orchestrator.get_response_from_model(history)
+    answer = orchestrator.get_title()
+    model_response = orchestrator.get_response_from_model(history).replace(answer, "TO_GUESS")
     if orchestrator.is_win:
         history.append(gr.ChatMessage(role="assistant", content="Bravo vous avez trouvé !"))
     else:
