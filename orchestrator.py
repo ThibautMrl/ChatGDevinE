@@ -29,7 +29,7 @@ class Orchestrator():
         return self.image
     
     def get_title(self) -> str:
-        raise self.title
+        return self.title
 
     def _test_response(self, history : List[gr.ChatMessage]) -> bool:
         if self.title in history[-1].content:
