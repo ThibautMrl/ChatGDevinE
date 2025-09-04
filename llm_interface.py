@@ -15,7 +15,7 @@ class Chat:
 
         self.model_name = "llama3.1:latest"
         self.port = 9007  # 11434
-        local_debug = False # set to true to debug locally on tiny boi gemma
+        local_debug = True # set to true to debug locally on tiny boi gemma
         if local_debug:
             self.model_name = "gemma3:270m"
             self.port = 11434
