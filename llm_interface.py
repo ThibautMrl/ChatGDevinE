@@ -13,9 +13,8 @@ class Chat:
         #        The context to use for answering clarification questions: {ARTICLE_TEXT}
         #        """,
         #    }
-        #self.model_name = "llama3.1:latest"
-
-        self.conversation = [self.conversation_starter]
+        #self.conversation = [self.conversation_starter]
+        
         self.model_name = "llama3.1:latest"
         self.port = 9007  # 11434
         self.client = Client(host=f"http://localhost:{self.port}")
