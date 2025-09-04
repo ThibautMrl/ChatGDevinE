@@ -2,7 +2,7 @@ import gradio as gr
 from typing import List, Optional
 from PIL import Image
 
-from wikiPage import get_random_wikipedia_page_with_image
+from wikiPage import WikiInterface #get_random_wikipedia_page_with_image
 from llm_interface import Chat
 
 class Orchestrator():
@@ -13,14 +13,13 @@ class Orchestrator():
         self.image : Optional[str]
         self.is_win : bool = False
         self.chat_backbone = Chat()
-
+        self.wiki_interface = WikiInterface()
 
     def chose_article(self):
-        page = get_random_wikipedia_page_with_image()
-        self.title = page.title
-        _ = page.summary
-        self.article = page.content.strip()
-        self.image = page.images[0]
+        page = self.wiki_interface.get_random_page()
+        self.title = page["title"]
+        self.article = page["content"]
+        self.image = page["image"]
 
     def get_article(self) -> str:
         return self.article
