@@ -3,7 +3,7 @@ from typing import List, Optional
 from PIL import Image
 
 from wikiPage import get_random_wikipedia_page_with_image
-
+from llm_interface import Chat
 
 class Orchestrator():
     def __init__(self):
@@ -12,6 +12,8 @@ class Orchestrator():
         self.title : Optional[str]
         self.image : Optional[str]
         self.is_win : bool = False
+        self.chat_backbone = Chat()
+
 
     def chose_article(self):
         page = get_random_wikipedia_page_with_image()
@@ -37,4 +39,5 @@ class Orchestrator():
         
     def get_response_from_model(self, history : List[gr.ChatMessage]) -> str:
         self._test_response(history)
-        raise NotImplementedError
+        response = self.chat_backbone.get_response_from_model(history)
+        return response
