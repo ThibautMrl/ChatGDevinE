@@ -36,7 +36,9 @@ def new_game_button():
 def chatbot_response(history, message):
     # Réponse texte + image
     history.append(gr.ChatMessage(role="user",content=message)),
-    history.append(gr.ChatMessage(role="assistant", content="Ceci est une réponse."))
+    #history.append(gr.ChatMessage(role="assistant", content="Ceci est une réponse."))
+    model_response = orchestrator.get_response_from_model(history)
+    history.append(gr.ChatMessage(role="assistant", content=model_response))
     return history, ""
 
 with gr.Blocks() as demo:
